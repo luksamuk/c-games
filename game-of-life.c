@@ -125,7 +125,7 @@ apply_rules(cell_t* current, const cell_t* old, int x, int y)
     unsigned neighbors = get_living_neighbors(old, x, y);
     size_t index = coord_to_idx(x, y);
    
-    if(current[index] == CELL_ALIVE) {
+    if(old[index] == CELL_ALIVE) {
 	// RULE 1: Any live cell with fewer than two live neighbors dies,
 	// as if by underpopulation.
 	// RULE 2: Any live cell with two or three live neighbors lives on
@@ -149,9 +149,8 @@ print_board(cell_t* board) {
 	for(x = 0; x < BOARD_WIDTH; x++) {
 	    size_t index = coord_to_idx(x, y);
 	    putchar(printable_state(board[index]));
-	    if(y != BOARD_WIDTH - 1) putchar(' ');
 	}
-	puts("|\n");
+	puts("|");
     }
 }
 
@@ -162,11 +161,7 @@ void
 add_glider(cell_t* board, int x, int y)
 {
     int positions[] = {
-	 1, 0,
-	 2, 1,
-	 0, 2,
-	 1, 2,
-	 2, 2
+	 1, 0,   2, 1,   0, 2,   1, 2,   2, 2
     };
     size_t i;
     for(i = 0; i < 5; i++) {
@@ -202,7 +197,7 @@ main(void)
     while(iterate) {
 	// Print board
 	print_board(cur_board);
-	printf("Generation: %llu\n", generation++);
+	printf("Generation: %llu\n", ++generation);
 	
 	// Copy old state
 	memcpy(old_board, cur_board, BOARD_SIZE * sizeof(cell_t));
