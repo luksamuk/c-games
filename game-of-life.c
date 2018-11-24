@@ -50,7 +50,7 @@
 // Cute macro to ensure that increasing coordinates beyond limits actually
 // wrap around playground, e.g. a negative X coordinate should only mean that
 // you're going left and reappearing on the right side.
-#define wrap_coords(x, y)	      				  	 \
+#define wrap_coords(x, y)						\
     x = (x < 0) ? (BOARD_WIDTH  - 1) : ((x > BOARD_WIDTH  - 1) ? 0 : x); \
     y = (y < 0) ? (BOARD_HEIGHT - 1) : ((y > BOARD_HEIGHT - 1) ? 0 : y);
 
@@ -148,7 +148,7 @@ print_board(cell_t* board) {
 	putchar('|');
 	for(x = 0; x < BOARD_WIDTH; x++) {
 	    size_t index = coord_to_idx(x, y);
-	    printf("%c", printable_state(board[index]));
+	    putchar(printable_state(board[index]));
 	    if(y != BOARD_WIDTH - 1) putchar(' ');
 	}
 	puts("|\n");
@@ -161,14 +161,13 @@ print_board(cell_t* board) {
 void
 add_glider(cell_t* board, int x, int y)
 {
-    int positions[] =
-	{
+    int positions[] = {
 	 1, 0,
 	 2, 1,
 	 0, 2,
 	 1, 2,
 	 2, 2
-	};
+    };
     size_t i;
     for(i = 0; i < 5; i++) {
 	int xp = x + positions[(i * 2)],
